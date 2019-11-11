@@ -74,6 +74,7 @@ class ExportTest {
     void testAssert() {
         assertEquals(true, true);
     }
+    
     @Test
     void testExport() throws ChronologerException {
         Command export = new ExportCommand("ExportTest", Boolean.TRUE, Boolean.FALSE, Boolean.FALSE);
