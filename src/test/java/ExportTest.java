@@ -50,7 +50,7 @@ class ExportTest {
         tasks = new TaskList(list);
         file = new File(System.getProperty("user.dir") + "/src/test/Test");
         placeholder = new File(System.getProperty("user.dir") + "/src/test/States");
-        storage = new Storage(file);
+        //storage = new Storage(file);
         history = new ChronologerStateList(placeholder, placeholder, placeholder);
 
         LocalDateTime startDate = LocalDateTime.now().plusDays(3);
@@ -71,13 +71,8 @@ class ExportTest {
     }
 
     @Test
-    void testAssert() {
-        assertEquals(true, true);
-    }
-    
-    @Test
     void testExport() throws ChronologerException {
-        Command export = new ExportCommand("ExportTest", Boolean.TRUE, Boolean.FALSE, Boolean.FALSE);
+        ExportCommand export = new ExportCommand("ExportTest", Boolean.TRUE, Boolean.FALSE, Boolean.FALSE);
         export.execute(tasks, storage, history);
         System.setProperty("net.fortuna.ical4j.timezone.cache.impl", MapTimeZoneCache.class.getName());
         calendarFile = new File(System.getProperty("user.dir") + "/src/ChronologerDatabase/ExportTest.ics");
@@ -116,7 +111,7 @@ class ExportTest {
             throw new ChronologerException(ChronologerException.fileDoesNotExist());
         }
         calendarFile.delete();
-        file.delete();
+        //file.delete();
     }
 
 }
