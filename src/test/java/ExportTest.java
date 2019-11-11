@@ -22,6 +22,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDateTime;
@@ -68,14 +69,21 @@ class ExportTest {
     }
 
     @Test
-    void testExport() throws ChronologerException, IOException, ParserException, ParseException {
+    void testExport() throws ChronologerException {
         Command export = new ExportCommand("ExportTest", Boolean.TRUE, Boolean.FALSE, Boolean.FALSE);
         export.execute(tasks, storage, history);
         System.setProperty("net.fortuna.ical4j.timezone.cache.impl", MapTimeZoneCache.class.getName());
         calendarFile = new File(System.getProperty("user.dir") + "/src/ChronologerDatabase/ExportTest.ics");
-        FileInputStream inputStream = new FileInputStream(calendarFile);
-        CalendarBuilder builder = new CalendarBuilder();
-        Calendar calendar = builder.build(inputStream);
+        FileInputStream inputStream;
+        Calendar calendar;
+        try {
+            inputStream = new FileInputStream(calendarFile);
+            CalendarBuilder builder = new CalendarBuilder();
+            calendar = builder.build(inputStream);
+        } catch (IOException | ParserException e) {
+            throw new ChronologerException(ChronologerException.fileDoesNotExist());
+        }
+        
 
         Component component = calendar.getComponents().get(0);
         Description deadlineDescription = component.getProperty(Property.DESCRIPTION);
@@ -87,10 +95,19 @@ class ExportTest {
         DtEnd deadlineDate = component.getProperty(Property.DTEND);
         java.util.Calendar deadlineCalendar = convertToCalendar(LocalDateTime.now().plusDays(3));
         DateTime testDeadlineDate = new DateTime(deadlineCalendar.getTime());
-        DateTime deadlineConverted = new DateTime(String.valueOf(deadlineDate.getValue()));
+        DateTime deadlineConverted;
+        try {
+            deadlineConverted = new DateTime(String.valueOf(deadlineDate.getValue()));
+        } catch (ParseException e) {
+            throw new ChronologerException(ChronologerException.wrongDateOrTime());
+        }
         Assertions.assertEquals(deadlineConverted, testDeadlineDate);
 
-        inputStream.close();
+        try {
+            inputStream.close();
+        } catch (IOException e) {
+            throw new ChronologerException(ChronologerException.fileDoesNotExist());
+        }
         calendarFile.delete();
         file.delete();
     }
