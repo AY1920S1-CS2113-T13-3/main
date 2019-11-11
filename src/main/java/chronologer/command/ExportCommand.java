@@ -68,8 +68,7 @@ public class ExportCommand extends Command {
      * @throws ValidationException  If the calendar is empty.
      */
     @Override
-    public void execute(TaskList tasks, Storage storage, ChronologerStateList history) throws ChronologerException,
-        ValidationException {
+    public void execute(TaskList tasks, Storage storage, ChronologerStateList history) throws ChronologerException {
         Calendar calendar = initializeCalendar();
         ArrayList<Task> taskList = tasks.getTasks();
         checkEmptyList(taskList);
@@ -87,10 +86,14 @@ public class ExportCommand extends Command {
             extractEvent(taskList, calendar);
             extractTodoPeriod(taskList, calendar);
         }
-
-        if (isCalendarValid(calendar)) {
-            CalendarOutput.outputCalendar(fileName.trim(), calendar);
-        } else {
+        try {
+            if (isCalendarValid(calendar)) {
+                CalendarOutput.outputCalendar(fileName.trim(), calendar);
+            } else {
+                throw new ChronologerException(ChronologerException.emptyCalendar());
+            }
+        } catch (ValidationException e) {
+            logger.writeLog(e.toString(), this.getClass().getName());
             throw new ChronologerException(ChronologerException.emptyCalendar());
         }
     }
