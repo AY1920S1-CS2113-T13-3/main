@@ -4,7 +4,7 @@ build_script:
   - gradlew.bat assemble checkstyleMain checkstyleTest
 
 test_script:
-  - gradlew.bat test
+  - gradlew.bat test --stacktrace
 
 environment:
   JAVA_HOME: C:\Program Files\Java\jdk11  # Use 64-bit Java
