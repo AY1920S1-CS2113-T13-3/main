@@ -12,7 +12,7 @@ image::docs/images/Ui.png[width="600", align="center"]
 == Site Map
 
 * https://github.com/AY1920S1-CS2113-T13-3/main/blob/master/docs/UserGuide.adoc[User Guide] (https://docs.google.com/document/d/1VvQkaFA1a4wwRuHORtm_oWX4MfhZwbbGz6x5F7ykQQQ/edit?usp=sharing[Google doc link])
-* https://github.com/AY1920S1-CS2113-T13-3/main/blob/master/docs/DeveloperGuide.adoc[Developer Guide]
+* https://github.com/AY1920S1-CS2113-T13-3/main/blob/master/docs/DeveloperGuide.adoc[Developer Guide](https://docs.google.com/document/d/1N_MfJYGjMP5Wg2GWepVc6x2Q2lWYy10F22I228wGiqs/edit?usp=sharing[Google doc link])
 * <<LearningOutcomes#, Learning Outcomes>>
 * https://github.com/AY1920S1-CS2113-T13-3/main/blob/master/docs/AboutUs.adoc[AboutUs]
 * https://github.com/AY1920S1-CS2113-T13-3/main/blob/master/docs/ContactUs.adoc[ContactUs]
