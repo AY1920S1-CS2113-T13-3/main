@@ -351,8 +351,10 @@ public class TaskList {
     //@@author fauzt
     private String getStartTime(Task task) {
         String time;
+        if (task.startDate == null) {
+            return EMPTY;
+        }
 
-        assert task.startDate != null;
         int hour = task.startDate.getHour();
         int minute = task.startDate.getMinute();
         time = getFormattedTime(hour, minute);
