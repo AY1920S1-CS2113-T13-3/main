@@ -32,6 +32,7 @@ public class DeleteCommand extends Command {
     public void execute(TaskList tasks, Storage storage, ChronologerStateList history) throws ChronologerException {
         if (isIndexValid(indexOfTask, tasks.getSize())) {
             Task task = tasks.delete(indexOfTask);
+            tasks.updateGui(null);
             history.addState(tasks.getTasks());
             storage.saveFile(tasks.getTasks());
             UiMessageHandler.outputMessage("Noted. I've removed this task:" + "\n " + task.toString()
